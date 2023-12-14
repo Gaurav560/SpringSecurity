@@ -3,6 +3,7 @@ package com.SeleniumExpress.Config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+//dispatcher servlet initializer class
 public class DSInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
