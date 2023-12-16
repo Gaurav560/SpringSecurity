@@ -1,13 +1,14 @@
 package com.SeleniumExpress.Config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 //as this class has method that will generate SpringSecurityFilterChain Bean
 @Configuration
@@ -18,6 +19,12 @@ public class SecurityAppConfig {
 	// adding two users and new way of adding user using User Builder in few lines
 	// of code
 
+	@Autowired
+	HttpSecurity httpSecurity;
+	
+	
+	
+	
 	@Bean
 	public InMemoryUserDetailsManager setUpUser() {
 
@@ -32,6 +39,22 @@ public class SecurityAppConfig {
 		return new InMemoryUserDetailsManager(userGaurav, userAmar);
 
 	}
+	
+	//redefining our own security filtet chain
+	@Bean
+	SecurityFilterChain settingUpHttpSecurity() throws Exception {
+		
+		httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
+		httpSecurity.formLogin();
+		httpSecurity.httpBasic();	
+		
+		return httpSecurity.build();
+	}
+	
+	
+	
+	
+	
 
 //	@Bean
 //	PasswordEncoder passwordEncoder() {
